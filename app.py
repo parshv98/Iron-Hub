@@ -526,11 +526,11 @@ def api_register_admin():
                 return jsonify({'error': 'Email is already registered.'}), 409
 
             cur.execute(
-                "INSERT INTO users (first_name, last_name, email, password, role) VALUES (%s, %s, %s, %s, 'admin')",
+                "INSERT INTO users (first_name, last_name, email, password, role, status) VALUES (%s, %s, %s, %s, 'admin', 'Active')",
                 (username, '', email, hash_password(password))
             )
             conn.commit()
-        return jsonify({'message': 'Admin registered successfully.'}), 201
+        return jsonify({'message': 'Admin registered successfully. You can now log in.'}), 201
     finally:
         conn.close()
 
