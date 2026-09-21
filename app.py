@@ -464,11 +464,11 @@ def api_register_user():
                 return jsonify({'error': 'Email is already registered.'}), 409
 
             cur.execute(
-                "INSERT INTO users (first_name, last_name, email, password, role, status) VALUES (%s, %s, %s, %s, 'user', 'Pending')",
+                "INSERT INTO users (first_name, last_name, email, password, role, status) VALUES (%s, %s, %s, %s, 'user', 'Active')",
                 (fname, lname, email, hash_password(password))
             )
             conn.commit()
-        return jsonify({'message': 'Registration submitted. Awaiting admin approval.'}), 201
+        return jsonify({'message': 'Registration successful! You can now log in.'}), 201
     finally:
         conn.close()
 
@@ -557,8 +557,6 @@ def api_login_user():
             return jsonify({'error': 'Invalid email or password.'}), 401
         if user['role'] != 'user':
             return jsonify({'error': 'This account is not a user account.'}), 403
-        if user['status'] == 'Pending':
-            return jsonify({'error': 'Your account is pending admin approval.'}), 403
         if user['status'] == 'Inactive':
             return jsonify({'error': 'Your account is inactive. Contact support.'}), 403
 
