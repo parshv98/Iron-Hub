@@ -12,7 +12,8 @@ try:
 except ImportError:
     psutil = None
 
-app = Flask(__name__, template_folder='Templates', static_folder='static')
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+app = Flask(__name__, template_folder=os.path.join(BASE_DIR, 'Templates'), static_folder=os.path.join(BASE_DIR, 'static'))
 app.secret_key = 'ironhub_secret_key'
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 app.config['SESSION_COOKIE_HTTPONLY'] = True
